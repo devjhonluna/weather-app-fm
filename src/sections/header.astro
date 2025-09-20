@@ -1,0 +1,20 @@
+---
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownTrigger,
+} from "../components/dropdown";
+---
+
+<header>
+  <div>logo</div>
+  <Dropdown >
+    <DropdownTrigger slot="trigger">Units</DropdownTrigger>
+    <DropdownContent slot="content">
+      <div x-data="{checked: false,switchSystem(){this.checked==true ? 'imperial' : 'metric'}}">
+        <input type="checkbox" name="unit-switch" id="unit-switch" x-model="checked" @change="switchSystem()" />
+        <label for="unit-switch">Switch to Imperial</label>
+      </div>
+    </DropdownContent>
+  </Dropdown>
+</header>

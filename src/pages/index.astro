@@ -1,16 +1,63 @@
 ---
+import "../styles/global.css";
 
+import SearchBar from "../components/SearchBar.astro";
+import Header from "../sections/header.astro";
+
+
+const geoApiEndpoint =
+  "https://geocoding-api.open-meteo.com/v1/search?name=[QUERY]&count=5&language=en&format=json";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <main>
+      <Header/>
+      <div
+        x-data="{
+          selectedCity: null,
+          isLoading: false,
+          cityData: null,
+          getCityData() {
+            if (!this.selectedCity) {
+              alert('Please select a city first');
+              return;
+            }
+            this.isLoading = true;
+            this.cityData = null;
+            this.$dispatch('clear-search-input'); // Despachamos el evento para limpiar el input
+            setTimeout(() => {
+              this.cityData = this.selectedCity;
+              this.isLoading = false;
+            }, 1500); // Simulamos una carga de 1.5 segundos
+          }
+        }"
+        @city-selected.window="selectedCity = $event.detail"
+      >
+        <SearchBar
+          apiEndpoint={geoApiEndpoint}
+          placeholder="Search for a city..."
+        />
+        <button @click="getCityData()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
+          Get City Data
+        </button>
+
+        <div x-show="isLoading" class="mt-4">
+          Cargando datos de la ciudad...
+        </div>
+        <pre
+          x-show="cityData"
+          x-text="JSON.stringify(cityData, null, 2)"
+          class="mt-4 p-4 bg-gray-100 rounded">
+        </pre>
+      </div>
+    </main>
+  </body>
 </html>

@@ -1,0 +1,8 @@
+---
+
+const {...props}=Astro.props
+---
+
+<button @click="toggle()" {...props}>
+    <slot/>
+</button>

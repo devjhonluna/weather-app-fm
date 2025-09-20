@@ -1,0 +1,21 @@
+---
+
+---
+
+<div x-data="dropdown">
+    <slot name="trigger"/>
+    <slot name="content"/>
+</div>
+
+<script is:inline>
+
+
+    document.addEventListener('alpine:init',()=>{
+        Alpine.data('dropdown',()=>({
+            open:false,
+            toggle(){
+                this.open=!this.open
+            }
+        }))
+    })
+</script>
