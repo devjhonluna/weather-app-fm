@@ -1,11 +1,11 @@
 ---
 import "../styles/global.css";
 
-import SearchBar from "../components/SearchBar.astro";
+import SearchBox from "../sections/SearchBox.astro";
 import Header from "../sections/header.astro";
-
-const geoApiEndpoint =
-  "https://geocoding-api.open-meteo.com/v1/search?name=[QUERY]&count=5&language=en&format=json";
+import CurrentWeather from "../sections/CurrentWeather.astro";
+import DailyWeather from "../sections/DailyWeather.astro";
+import HourlyWeather from "../sections/HourlyWeather.astro";
 ---
 
 <html lang="es">
@@ -33,41 +33,17 @@ const geoApiEndpoint =
         }"
         @city-selected.window="selectedCity = $event.detail"
       >
-        <div class="">
-          <SearchBar
-            apiEndpoint={geoApiEndpoint}
-            placeholder="Search for a city..."
-          />
-          <button @click="getCityData()" class=""> Get City Data </button>
-        </div>
+        <SearchBox />
         <div x-show="$store.app.isLoading" class="">
           Cargando datos de la ciudad...
         </div>
 
-        <!-- Contenedor para mostrar la ciudad y el país -->
-        <div x-show="!$store.app.isLoading && $store.app.location.city" class="mt-4">
-          <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
-          <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>
-        </div>
-
-        <pre
-          x-show="$store.app.currentData"
-          x-text="JSON.stringify($store.app.currentData, null, 2)"
-          class="mt-4 p-4 bg-gray-100 rounded">
-        </pre>
-        <pre
-          x-show="$store.app.dailyData"
-          x-text="JSON.stringify($store.app.dailyData, null, 2)"
-          class="mt-4 p-4 bg-gray-100 rounded">
-        </pre>
-           <pre
-          x-show="$store.app.hourlyData"
-          x-text="JSON.stringify($store.app.hourlyData, null, 2)"
-          class="mt-4 p-4 bg-gray-100 rounded">
-        </pre>
-      </div>
+        <CurrentWeather />
+        <DailyWeather />
+        <HourlyWeather />
+       </div>
     </main>
   </body>
 </html>
 
-<script type="module" src="../../src/utils/app.js"></script>
+<script type="module" is:inline src="../../src/utils/app.js"></script>

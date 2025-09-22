@@ -1,0 +1,10 @@
+<!-- Contenedor para mostrar la ciudad y el país -->
+<div x-show="!$store.app.isLoading && $store.app.location.city" class="mt-4">
+  <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
+  <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>
+  <pre
+    x-show="$store.app.currentData"
+    x-text="JSON.stringify($store.app.currentData, null, 2)"
+    class="mt-4 p-4 bg-gray-100 rounded">
+  </pre>
+</div>

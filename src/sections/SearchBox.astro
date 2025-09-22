@@ -1,0 +1,11 @@
+---
+import SearchBar from "../components/SearchBar.astro";
+
+const geoApiEndpoint =
+  "https://geocoding-api.open-meteo.com/v1/search?name=[QUERY]&count=5&language=en&format=json";
+---
+
+<div class="">
+  <SearchBar apiEndpoint={geoApiEndpoint} placeholder="Search for a city..." />
+  <button @click="getCityData()" class=""> Get City Data </button>
+</div>
