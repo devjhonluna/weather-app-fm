@@ -11,51 +11,94 @@ import {
   <Dropdown>
     <DropdownTrigger slot="trigger">Units</DropdownTrigger>
     <DropdownContent slot="content">
-      <!-- Usamos el store global de Alpine -->
-      <div x-data>
-        <input
-          type="checkbox"
-          id="unit-switch"
-          :checked="$store.app.unitSystem === 'imperial'"
-          @change="$store.app.toggleUnitSystem()"
-        />
-        <label
-          for="unit-switch"
-          x-text="$store.app.unitSystem === 'metric' ? 'Switch to Imperial' : 'Switch to Metric'"
-        ></label>
-      </div>
-      <ul>
+      <ul x-data>
+        <li>
+          <div>
+            <label
+              for="unit-switch"
+              x-text="$store.app.unitSystem === 'metric' ? 'Switch to Imperial' : 'Switch to Metric'"
+            ></label>
+            <input
+              type="checkbox"
+              id="unit-switch"
+              :checked="$store.app.unitSystem === 'imperial'"
+              @change="$store.app.toggleUnitSystem()"
+            />
+          </div>
+        </li>
         <li>
           <span>temperature</span>
           <div class="">
             <label for="Celsius">Celsius (ºC)</label>
-            <input type="radio" name="Celsius" />
+            <input
+              type="radio"
+              id="Celsius"
+              name="temperature"
+              value="celsius"
+              :checked="$store.app.units.temperature_unit === 'celsius'"
+              @change="$store.app.updateUnit('temperature_unit', 'celsius')"
+            />
           </div>
           <div class="">
             <label for="Fahrenheit">Fahrenheit (ºF)</label>
-            <input type="radio" name="Fahrenheit" />
+            <input
+              type="radio"
+              id="Fahrenheit"
+              name="temperature"
+              value="fahrenheit"
+              :checked="$store.app.units.temperature_unit === 'fahrenheit'"
+              @change="$store.app.updateUnit('temperature_unit', 'fahrenheit')"
+            />
           </div>
         </li>
         <li>
           <span>wind speed</span>
-           <div class="">
-             <label for="kmh">Km/h</label>
-             <input type="radio" name="kmh" />
+          <div class="">
+            <label for="kmh">Km/h</label>
+            <input
+              type="radio"
+              id="kmh"
+              name="wind"
+              value="kmh"
+              :checked="$store.app.units.wind_speed_unit === 'kmh'"
+              @change="$store.app.updateUnit('wind_speed_unit', 'kmh')"
+            />
           </div>
           <div class="">
             <label for="mph">Mph</label>
-            <input type="radio" name="mph" />
+            <input
+              type="radio"
+              id="mph"
+              name="wind"
+              value="mph"
+              :checked="$store.app.units.wind_speed_unit === 'mph'"
+              @change="$store.app.updateUnit('wind_speed_unit', 'mph')"
+            />
           </div>
         </li>
         <li>
-          <span>precipitati</span>on
-            <div class="">
-             <label for="mm">Millimeters (mm)</label>
-             <input type="radio" name="mm" />
+          <span>precipitation</span>
+          <div class="">
+            <label for="mm">Millimeters (mm)</label>
+            <input
+              type="radio"
+              id="mm"
+              name="precipitation"
+              value="mm"
+              :checked="$store.app.units.precipitation_unit === 'mm'"
+              @change="$store.app.updateUnit('precipitation_unit', 'mm')"
+            />
           </div>
           <div class="">
             <label for="inch">Inches (inch)</label>
-            <input type="radio" name="inch" />
+            <input
+              type="radio"
+              id="inch"
+              name="precipitation"
+              value="inch"
+              :checked="$store.app.units.precipitation_unit === 'inch'"
+              @change="$store.app.updateUnit('precipitation_unit', 'inch')"
+            />
           </div>
         </li>
       </ul>
