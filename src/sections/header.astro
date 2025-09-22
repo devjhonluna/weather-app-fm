@@ -8,18 +8,57 @@ import {
 
 <header>
   <div>logo</div>
-  <Dropdown >
+  <Dropdown>
     <DropdownTrigger slot="trigger">Units</DropdownTrigger>
     <DropdownContent slot="content">
       <!-- Usamos el store global de Alpine -->
       <div x-data>
-        <input 
-          type="checkbox" 
-          id="unit-switch" 
+        <input
+          type="checkbox"
+          id="unit-switch"
           :checked="$store.app.unitSystem === 'imperial'"
-          @change="$store.app.toggleUnitSystem()" />
-        <label for="unit-switch" x-text="$store.app.unitSystem === 'metric' ? 'Switch to Imperial' : 'Switch to Metric'"></label>
+          @change="$store.app.toggleUnitSystem()"
+        />
+        <label
+          for="unit-switch"
+          x-text="$store.app.unitSystem === 'metric' ? 'Switch to Imperial' : 'Switch to Metric'"
+        ></label>
       </div>
+      <ul>
+        <li>
+          <span>temperature</span>
+          <div class="">
+            <label for="Celsius">Celsius (ºC)</label>
+            <input type="radio" name="Celsius" />
+          </div>
+          <div class="">
+            <label for="Fahrenheit">Fahrenheit (ºF)</label>
+            <input type="radio" name="Fahrenheit" />
+          </div>
+        </li>
+        <li>
+          <span>wind speed</span>
+           <div class="">
+             <label for="kmh">Km/h</label>
+             <input type="radio" name="kmh" />
+          </div>
+          <div class="">
+            <label for="mph">Mph</label>
+            <input type="radio" name="mph" />
+          </div>
+        </li>
+        <li>
+          <span>precipitati</span>on
+            <div class="">
+             <label for="mm">Millimeters (mm)</label>
+             <input type="radio" name="mm" />
+          </div>
+          <div class="">
+            <label for="inch">Inches (inch)</label>
+            <input type="radio" name="inch" />
+          </div>
+        </li>
+      </ul>
     </DropdownContent>
   </Dropdown>
 </header>
