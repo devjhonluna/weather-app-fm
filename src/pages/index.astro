@@ -4,12 +4,11 @@ import "../styles/global.css";
 import SearchBar from "../components/SearchBar.astro";
 import Header from "../sections/header.astro";
 
-
 const geoApiEndpoint =
   "https://geocoding-api.open-meteo.com/v1/search?name=[QUERY]&count=5&language=en&format=json";
 ---
 
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -19,45 +18,56 @@ const geoApiEndpoint =
   </head>
   <body>
     <main>
-      <Header/>
+      <Header />
       <div
         x-data="{
           selectedCity: null,
-          isLoading: false,
-          cityData: null,
           getCityData() {
             if (!this.selectedCity) {
               alert('Please select a city first');
               return;
             }
-            this.isLoading = true;
-            this.cityData = null;
-            this.$dispatch('clear-search-input'); // Despachamos el evento para limpiar el input
-            setTimeout(() => {
-              this.cityData = this.selectedCity;
-              this.isLoading = false;
-            }, 1500); // Simulamos una carga de 1.5 segundos
+            $store.app.fetchWeatherData(this.selectedCity);
+            this.$dispatch('clear-search-input');
           }
         }"
         @city-selected.window="selectedCity = $event.detail"
       >
-        <SearchBar
-          apiEndpoint={geoApiEndpoint}
-          placeholder="Search for a city..."
-        />
-        <button @click="getCityData()" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
-          Get City Data
-        </button>
-
-        <div x-show="isLoading" class="mt-4">
+        <div class="">
+          <SearchBar
+            apiEndpoint={geoApiEndpoint}
+            placeholder="Search for a city..."
+          />
+          <button @click="getCityData()" class=""> Get City Data </button>
+        </div>
+        <div x-show="$store.app.isLoading" class="">
           Cargando datos de la ciudad...
         </div>
+
+        <!-- Contenedor para mostrar la ciudad y el país -->
+        <div x-show="!$store.app.isLoading && $store.app.location.city" class="mt-4">
+          <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
+          <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>
+        </div>
+
         <pre
-          x-show="cityData"
-          x-text="JSON.stringify(cityData, null, 2)"
+          x-show="$store.app.currentData"
+          x-text="JSON.stringify($store.app.currentData, null, 2)"
+          class="mt-4 p-4 bg-gray-100 rounded">
+        </pre>
+        <pre
+          x-show="$store.app.dailyData"
+          x-text="JSON.stringify($store.app.dailyData, null, 2)"
+          class="mt-4 p-4 bg-gray-100 rounded">
+        </pre>
+           <pre
+          x-show="$store.app.hourlyData"
+          x-text="JSON.stringify($store.app.hourlyData, null, 2)"
           class="mt-4 p-4 bg-gray-100 rounded">
         </pre>
       </div>
     </main>
   </body>
 </html>
+
+<script type="module" src="../../src/utils/app.js"></script>

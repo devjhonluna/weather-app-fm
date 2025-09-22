@@ -68,7 +68,10 @@ const { items = [], placeholder = "Search...", apiEndpoint = null } = Astro.prop
                 fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        this.results = data.results || []; // Guardamos el arreglo de objetos completo
+                        // Mapeamos los resultados para renombrar 'country_code' a 'country'
+                        this.results = (data.results || []).map(item => ({
+                            ...item, country: item.country_code
+                        }));
                     })
                     .catch(() => this.results = [])
                     .finally(() => this.loading = false);
@@ -89,7 +92,7 @@ const { items = [], placeholder = "Search...", apiEndpoint = null } = Astro.prop
 
         selectItem(item) {
             if (!item) return;
-            this.search = `${item.name}, ${item.country_code}`; // Actualizamos el input con el texto
+            this.search = `${item.name}, ${item.country}`; // Usamos 'country' para consistencia
             this.open = false;
             this.reset();
             // Emitimos un evento con el objeto completo de la ciudad
