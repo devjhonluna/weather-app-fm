@@ -1,115 +1,129 @@
 ---
-const { items = [], placeholder = "Search...", apiEndpoint = null } = Astro.props;
+const {
+  items = [],
+  placeholder = "Search...",
+  apiEndpoint = null,
+} = Astro.props;
 ---
+
 <div
-    x-data={`searchbar({
+  x-data={`searchbar({
         items: ${JSON.stringify(items)},
         apiEndpoint: ${JSON.stringify(apiEndpoint)}
     })`}
-    @click.outside="open = false; reset();"
-    @clear-search-input.window="search = ''; results = []; open = false;"
+  @click.outside="open = false; reset();"
+  @clear-search-input.window="search = ''; results = []; open = false;"
 >
-    <input
-        x-model="search"
-        @input.debounce.300ms="searchItems()"
-        @keydown.arrow-down.prevent="move(1)"
-        @keydown.arrow-up.prevent="move(-1)"
-        @keydown.enter.prevent="selectItem(results[selectedIndex])"
-        @keydown.escape.prevent="open = false; reset()"
-        placeholder={placeholder}
-        class="w-full px-4 py-2 border rounded-md"
-    >
- 
-    <ul x-show="open" class="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-10">
-        <template x-if="loading">
-            <li class="px-4 py-2 text-gray-500">Búsqueda en progreso...</li>
-        </template>
-        <template x-if="!loading && results.length === 0 && search !== ''">
-            <li class="px-4 py-2 text-gray-500">No se encontraron resultados</li>
-        </template>
-        <template x-for="(item, index) in results" :key="`${item}-${index}`">
-            <li
-                x-text="`${item.name}, ${item.country_code}`"
-                @click="selectItem(item)"
-                :class="{ 'bg-gray-200': index === selectedIndex }"
-                class="px-4 py-2 cursor-pointer hover:bg-gray-100"
-            ></li>
-        </template>
-    </ul>
+  <input
+    x-model="search"
+    @input.debounce.300ms="searchItems()"
+    @keydown.arrow-down.prevent="move(1)"
+    @keydown.arrow-up.prevent="move(-1)"
+    @keydown.enter.prevent="selectItem(results[selectedIndex])"
+    @keydown.escape.prevent="open = false; reset()"
+    placeholder={placeholder}
+    class="w-full px-4 py-2 border rounded-md"
+  />
+
+  <ul
+    x-show="open"
+    class="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-10"
+  >
+    <template x-if="loading">
+      <li class="px-4 py-2 text-gray-500">Búsqueda en progreso...</li>
+    </template>
+    <template x-if="!loading && results.length === 0 && search !== ''">
+      <li class="px-4 py-2 text-gray-500">No se encontraron resultados</li>
+    </template>
+    <template x-for="(item, index) in results" :key="`${item}-${index}`">
+      <li
+        x-text="`${item.name}, ${item.admin1} ,${item.country}`"
+        @click="selectItem(item)"
+        :class="{ 'bg-gray-200': index === selectedIndex }"
+        class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+      >
+      </li>
+    </template>
+  </ul>
 </div>
 
 <script is:inline>
-    document.addEventListener('alpine:init', () => {
-    Alpine.data('searchbar', (props) => ({
-        // Props
-        items: props.items || [],
-        apiEndpoint: props.apiEndpoint || null,
-        // State
-        search: '',
-        open: false,
-        loading: false,
-        results: [],
-        selectedIndex: -1,
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("searchbar", (props) => ({
+      // Props
+      items: props.items || [],
+      apiEndpoint: props.apiEndpoint || null,
+      // State
+      search: "",
+      open: false,
+      loading: false,
+      results: [],
+      selectedIndex: -1,
 
-        // Methods
-        searchItems() {
-            this.open = true;
-            this.selectedIndex = -1;
-            if (this.search === '') {
-                this.results = [];
-                this.open = false;
-                return;
-            }
-            this.loading = true;
-
-            if (this.apiEndpoint) {
-                // Modo API - [QUERY] es el marcador de posición correcto
-                const url = this.apiEndpoint.replace('[QUERY]', encodeURIComponent(this.search));
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        // Mapeamos los resultados para renombrar 'country_code' a 'country'
-                        this.results = (data.results || []).map(item => ({
-                            ...item, country: item.country_code
-                        }));
-                    })
-                    .catch(() => this.results = [])
-                    .finally(() => this.loading = false);
-            } else {
-                // Modo Local
-                setTimeout(() => {
-                    this.results = this.items.filter(
-                        i => i.toLowerCase().startsWith(this.search.toLowerCase())
-                    );
-                    this.loading = false;
-                }, 300);
-            }
-        },
-
-        reset() {
-            this.selectedIndex = -1;
-        },
-
-        selectItem(item) {
-            if (!item) return;
-            this.search = `${item.name}, ${item.country}`; // Usamos 'country' para consistencia
-            this.open = false;
-            this.reset();
-            // Emitimos un evento con el objeto completo de la ciudad
-            this.$dispatch('city-selected', item);
-        },
-
-        move(direction) {
-            if (!this.open || this.results.length === 0) return;
-            let newIndex = this.selectedIndex + direction;
-            if (newIndex < 0) {
-                this.selectedIndex = this.results.length - 1;
-            } else if (newIndex >= this.results.length) {
-                this.selectedIndex = 0;
-            } else {
-                this.selectedIndex = newIndex;
-            }
+      // Methods
+      searchItems() {
+        this.open = true;
+        this.selectedIndex = -1;
+        if (this.search === "") {
+          this.results = [];
+          this.open = false;
+          return;
         }
+        this.loading = true;
+
+        if (this.apiEndpoint) {
+          // Modo API - [QUERY] es el marcador de posición correcto
+          const url = this.apiEndpoint.replace(
+            "[QUERY]",
+            encodeURIComponent(this.search)
+          );
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              // Mapeamos los resultados para renombrar 'country_code' a 'country'
+              this.results = (data.results || []).map((item) => ({
+                ...item,
+                admin: item.admin1,
+                country: item.country,
+              }));
+            })
+            .catch(() => (this.results = []))
+            .finally(() => (this.loading = false));
+        } else {
+          // Modo Local
+          setTimeout(() => {
+            this.results = this.items.filter((i) =>
+              i.toLowerCase().startsWith(this.search.toLowerCase())
+            );
+            this.loading = false;
+          }, 300);
+        }
+      },
+
+      reset() {
+        this.selectedIndex = -1;
+      },
+
+      selectItem(item) {
+        if (!item) return;
+        this.search = `${item.name}, ${item.admin1} ,${item.country}`; // Usamos 'country' para consistencia
+        this.open = false;
+        this.reset();
+        // Emitimos un evento con el objeto completo de la ciudad
+        this.$dispatch("city-selected", item);
+      },
+
+      move(direction) {
+        if (!this.open || this.results.length === 0) return;
+        let newIndex = this.selectedIndex + direction;
+        if (newIndex < 0) {
+          this.selectedIndex = this.results.length - 1;
+        } else if (newIndex >= this.results.length) {
+          this.selectedIndex = 0;
+        } else {
+          this.selectedIndex = newIndex;
+        }
+      },
     }));
-});
+  });
 </script>

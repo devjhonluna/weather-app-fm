@@ -3,7 +3,7 @@ import getUnitSystem from "../utils/units";
 import { fetchWeatherFromApi } from "./api";
 
 Alpine.store("app", {
-  location: { city: "", country: "" },
+  location: { city: "", admin:"",country: "" },
   unitSystem: "metric", // 'metric' o 'imperial'
   units: {
     temperature_unit: "celsius",
@@ -57,7 +57,7 @@ Alpine.store("app", {
     }
   },
 
-  async fetchWeatherData({ latitude: lat, longitude: lon, name, city, country }) {
+  async fetchWeatherData({ latitude: lat, longitude: lon, name, city, country,admin }) {
     if (!lat || !lon) {
       console.error("Latitude and Longitude are required.");
       return;
@@ -66,6 +66,7 @@ Alpine.store("app", {
     this.isLoading = true;
     this.location = {
       city: city || name,
+      admin: admin,
       country: country,
       latitude: lat,
       longitude: lon,

@@ -2,6 +2,7 @@
 <div x-show="!$store.app.isLoading && $store.app.location.city" class="mt-4">
   <div>
     <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
+    <p x-text="$store.app.location.admin"></p>
     <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>    
     <p
       x-text="new Date($store.app.currentData.current.time).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })"
