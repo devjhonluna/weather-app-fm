@@ -1,10 +1,32 @@
 <!-- Contenedor para mostrar la ciudad y el país -->
 <div x-show="!$store.app.isLoading && $store.app.location.city" class="mt-4">
-  <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
-  <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>
-  <pre
-    x-show="$store.app.currentData"
-    x-text="JSON.stringify($store.app.currentData, null, 2)"
-    class="mt-4 p-4 bg-gray-100 rounded">
-  </pre>
+  <div>
+    <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
+    <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>    
+    <p
+      x-text="new Date($store.app.currentData.current.time).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })"
+    
+    ></p>
+    <p x-text="$store.app.currentData.current.temperature_2m"></p>
+    <p x-text="$store.app.currentData.units.temperature_2m"></p>
+  </div>
+  <ul>
+    <li>
+      Feels Like:
+      <span x-text="$store.app.currentData.current.apparent_temperature"></span>
+      <span x-text="$store.app.currentData.units.apparent_temperature"></span>
+    </li>
+    <li>Humidity:
+      <span x-text="$store.app.currentData.current.relative_humidity_2m"></span>
+      <span x-text="$store.app.currentData.units.relative_humidity_2m"></span>
+    </li>
+    <li>Wind:
+      <span x-text="$store.app.currentData.current.wind_speed_10m"></span>
+      <span x-text="$store.app.currentData.units.wind_speed_10m"></span>
+    </li>
+    <li>Precipitation:
+      <span x-text="$store.app.currentData.current.precipitation"></span>
+      <span x-text="$store.app.currentData.units.precipitation"></span>
+    </li>
+  </ul>
 </div>

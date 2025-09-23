@@ -10,9 +10,14 @@ Alpine.store("app", {
     wind_speed_unit: "kmh",
     precipitation_unit: "mm",
   },
-  currentData: null,
-  hourlyData: null,
-  dailyData: null,
+  currentData: { current: {}, units: {} },
+  hourlyData: { hourly: {}, units: {} }, // 'hourly' ahora es un objeto
+  selectedHourlyDay: "", // Almacena la fecha del día seleccionado
+  dailyData: {
+    // Inicializamos con la estructura esperada: un objeto con una propiedad 'daily' que es un array.
+    daily: [],
+    units: {},
+  },
   isLoading: false,
 
   init() {
@@ -76,6 +81,10 @@ Alpine.store("app", {
       this.currentData = weatherData.currentData;
       this.hourlyData = weatherData.hourlyData;
       this.dailyData = weatherData.dailyData;
+
+      // Seleccionar automáticamente el primer día disponible en el pronóstico por hora
+      const firstDay = Object.keys(this.hourlyData.hourly)[0];
+      this.selectedHourlyDay = firstDay || "";
     } catch (error) {
       console.error("Error fetching weather data:", error);
       alert("Could not fetch weather data.");

@@ -1,5 +1,18 @@
- <pre
-          x-show="$store.app.dailyData"
-          x-text="JSON.stringify($store.app.dailyData, null, 2)"
-          class="mt-4 p-4 bg-gray-100 rounded">
-        </pre>
+<div x-show="$store.app.location.city && !$store.app.isLoading && $store.app.dailyData.daily.length > 0" class="mt-4 p-4 bg-gray-100 rounded">
+  <h2 class="text-xl font-bold mb-2">7-Day Forecast</h2>
+  <ul class="space-y-2">
+    <template x-for="(day, index) in $store.app.dailyData.daily" :key="index">
+      <li class="p-2 border rounded bg-white">
+        <p>
+          <strong>Date:</strong> <span x-text="day.time"></span>
+        </p>
+        <p>
+          <strong>Max Temp:</strong>
+          <span x-text="day.temperature_2m_max"></span>
+          <span x-text="$store.app.dailyData.units.temperature_2m_max"></span>
+        </p>
+        <p><strong>Weather Code:</strong> <span x-text="day.weather_code"></span></p>
+      </li>
+    </template>
+  </ul>
+</div>

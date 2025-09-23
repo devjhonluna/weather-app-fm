@@ -1,5 +1,46 @@
-<pre
-  x-show="$store.app.hourlyData"
-  x-text="JSON.stringify($store.app.hourlyData, null, 2)"
-  class="mt-4 p-4 bg-gray-100 rounded">
-</pre>
+<div
+  x-show="$store.app.location.city && !$store.app.isLoading && Object.keys($store.app.hourlyData.hourly).length > 0"
+  class="mt-4 p-4 bg-gray-100 rounded"
+>
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-bold">Hourly Forecast</h2>
+    <select
+      x-model="$store.app.selectedHourlyDay"
+      class="p-2 border rounded bg-white"
+    >
+      <template
+        x-for="day in Object.keys($store.app.hourlyData.hourly)"
+        :key="day"
+      >
+        <option
+          :value="day"
+          x-text="new Date(day + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })"
+        ></option>
+      </template>
+    </select>
+  </div>
+
+  <ul class="flex overflow-x-auto space-x-4 pb-4">
+    <template x-if="$store.app.selectedHourlyDay">
+      <template
+        x-for="(hour, index) in $store.app.hourlyData.hourly[$store.app.selectedHourlyDay]"
+        :key="index"
+      >
+        <li class="flex-shrink-0 p-2 border rounded bg-white text-center w-28">
+          <p
+            class="font-semibold"
+            x-text="new Date(hour.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})"
+          >
+          </p>
+          <p class="text-lg">
+            <span x-text="Math.round(hour.temperature_2m)"></span>
+            <span x-text="$store.app.hourlyData.units.temperature_2m"></span>
+          </p>
+          <p class="text-xs">
+            Code: <span x-text="hour.weather_code"></span>
+          </p>
+        </li>
+      </template>
+    </template>
+  </ul>
+</div>

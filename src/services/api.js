@@ -1,21 +1,8 @@
+import { processDailyData } from "../utils/processDailyData";
+import { processHourlyData } from "../utils/processHourlyData";
+
 const API_BASE_URL = "https://api.open-meteo.com/v1/forecast";
 
-/**
- * Processes the daily weather data from the API into a more usable format.
- * It groups data by day instead of by metric.
- * @param {object} dailyData - The 'daily' object from the API response.
- * @returns {Array<object>} An array of objects, where each object represents a day.
- */
-function processDailyData(dailyData) {
-  const { time, weather_code, temperature_2m_max, temperature_2m_min } = dailyData;
-
-  return time.map((date, index) => ({
-    time: date,
-    weather_code: weather_code[index],
-    temperature_2m_max: temperature_2m_max[index],
-    temperature_2m_min: temperature_2m_min[index],
-  }));
-}
 
 /**
  * Fetches weather data from the Open-Meteo API.
@@ -49,6 +36,7 @@ export async function fetchWeatherFromApi({ latitude, longitude, units }) {
 
   const data = await response.json();
 
+
   // Return data structured for the store
   return {
     currentData: {
@@ -56,7 +44,7 @@ export async function fetchWeatherFromApi({ latitude, longitude, units }) {
       units: data.current_units,
     },
     hourlyData: {
-      hourly: data.hourly,
+      hourly: processHourlyData(data.hourly), // Process the hourly data here
       units: data.hourly_units,
     },
     dailyData: {
@@ -64,4 +52,5 @@ export async function fetchWeatherFromApi({ latitude, longitude, units }) {
       units: data.daily_units,
     },
   };
+  
 }
