@@ -5,7 +5,10 @@ Desafío #15 de Frontend Mentor | Seleccionado para la Hackathon de Frontend Men
 Una aplicación del clima moderna, responsive y de alto rendimiento, construida como solución al desafío número 15 de Frontend Mentor. Este proyecto también fue desarrollado dentro del marco de la hackathon de 30 días organizada por la plataforma.
 
 ## 🚀 Tecnologías Utilizadas
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6fb1e9716d182702fea71acc3423a4c3766ff14e
 La aplicación aprovecha la potencia y simplicidad de las siguientes herramientas:
 
 Astro JS: Como metaframework base para obtener un rendimiento óptimo y una experiencia de desarrollo moderna.
@@ -21,11 +24,3 @@ Open-Meteo API: Como fuente de datos meteorológicos gratuita y confiable.
 Consulta del clima en tiempo real.
 
 Diseño 100% responsive (mobile-first).
-
-## Screenshots
-
-### mobile
-
-### tablet
-
-### Laptop
