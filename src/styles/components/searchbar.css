@@ -1,0 +1,11 @@
+@layer components{
+    .searchbar{
+        @apply relative flex-[1_0_auto] border border-neutral-900 dark:border-neutral-800 dark:bg-neutral-800 dark:text-neutral-200 rounded-md;
+        .searchbar-field{
+            @apply w-full pl-12 pr-6 py-4 rounded-md ;
+        }
+        .searchbar-options{
+           @apply absolute mt-1 w-full bg-white dark:bg-neutral-800 border dark:border-neutral-700 rounded-md shadow-lg z-10;
+        }
+    }
+}

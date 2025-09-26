@@ -1,33 +1,78 @@
+---
+import { WEATHER_CODE_TO_IMAGE_MAP } from "../utils/getWeatherImg.js";
+const imageMap = WEATHER_CODE_TO_IMAGE_MAP;
+---
+
 <!-- Contenedor para mostrar la ciudad y el país -->
-<div x-show="!$store.app.isLoading && $store.app.location.city" class="mt-4">
-  <div>
-    <h2 class="text-2xl font-bold" x-text="$store.app.location.city"></h2>
-    <p x-text="$store.app.location.admin"></p>
-    <p class="text-lg text-gray-600" x-text="$store.app.location.country"></p>    
-    <p
-      x-text="new Date($store.app.currentData.current.time).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })"
-    
-    ></p>
-    <p x-text="$store.app.currentData.current.temperature_2m"></p>
-    <p x-text="$store.app.currentData.units.temperature_2m"></p>
+<div
+  x-show="!$store.app.isLoading && $store.app.location.city"
+  class="lg:col-span-2 flex flex-col gap-8"
+  x-data=`displaycodeimg({
+    imageMap: ${JSON.stringify(imageMap)},
+   })`
+>
+  <div
+    class="card card-bg md:card-horizontal md:justify-between text-white px-6 py-20 rounded-3xl"
+  >
+    <div class="flex flex-col items-center md:items-start gap-4 *:text-center *:md:text-start">
+      <h2
+        class="font-dm font-bold text-3xl leading-tight"
+        x-text="`${$store.app.location.city}, 
+        ${$store.app.location.admin}, ${$store.app.location.country}`"
+      >
+      </h2>
+      <p class="font-dm font-medium text-lg leading-tight"
+        x-text="new Date($store.app.currentData.current.time).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })"
+      >
+      </p>
+    </div>
+    <div
+      class="flex flex-row justify-between gap-x-2.5 items-center"
+    >
+      <img
+        :src="getImageCode($store.app.currentData.current.weather_code)"
+        alt="Current weather icon"
+        class="w-20 h-20"
+      />
+      <p
+        class="text-5xl text-center font-semibold font-dm italic leading-tight"
+        x-text="`${Math.round($store.app.currentData.current.temperature_2m)} ${$store.app.currentData.units.temperature_2m}`"
+      >
+      </p>
+    </div>
   </div>
-  <ul>
-    <li>
+  <ul class="grid grid-cols-2 md:grid-cols-4 gap-6 grow *:bg-neutral-900 *:text-neutral-0 *:dark:border *:dark:bg-neutral-800 *:dark:border-neutral-600 *:dark:text-neutral-300 *:font-dm *:text-lg *:font-medium *:leading-tight">
+    <li
+      class="p-5 rounded-xl card items-start gap-6"
+    >
       Feels Like:
-      <span x-text="$store.app.currentData.current.apparent_temperature"></span>
-      <span x-text="$store.app.currentData.units.apparent_temperature"></span>
+      <span class="text-3xl text-neutral-0 font-light leading-none"
+        x-text="`${Math.round($store.app.currentData.current.apparent_temperature)} ${$store.app.currentData.units.apparent_temperature} `"
+      ></span>
     </li>
-    <li>Humidity:
-      <span x-text="$store.app.currentData.current.relative_humidity_2m"></span>
-      <span x-text="$store.app.currentData.units.relative_humidity_2m"></span>
+    <li
+      class="p-5  rounded-xl flex flex-col justify-center items-start gap-6 "
+    >
+      Humidity:
+      <span class="text-3xl font-light leading-none text-neutral-0"
+        x-text="`${$store.app.currentData.current.relative_humidity_2m} ${$store.app.currentData.units.relative_humidity_2m}`"
+      ></span>
     </li>
-    <li>Wind:
-      <span x-text="$store.app.currentData.current.wind_speed_10m"></span>
-      <span x-text="$store.app.currentData.units.wind_speed_10m"></span>
+    <li
+      class="p-5  rounded-xl flex flex-col justify-center items-start gap-6 "
+    >
+      Wind:
+      <span class="text-3xl font-light leading-none text-neutral-0"
+        x-text="`${$store.app.currentData.current.wind_speed_10m} ${$store.app.currentData.units.wind_speed_10m}`"
+      ></span>
     </li>
-    <li>Precipitation:
-      <span x-text="$store.app.currentData.current.precipitation"></span>
-      <span x-text="$store.app.currentData.units.precipitation"></span>
+    <li
+      class="p-5  rounded-xl flex flex-col justify-center items-start gap-6"
+    >
+      Precipitation:
+      <span class="text-3xl font-light leading-none text-neutral-0"
+        x-text="`${$store.app.currentData.current.precipitation} ${$store.app.currentData.units.precipitation}`"
+      ></span>
     </li>
   </ul>
 </div>

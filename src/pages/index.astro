@@ -6,42 +6,44 @@ import Header from "../sections/header.astro";
 import CurrentWeather from "../sections/CurrentWeather.astro";
 import DailyWeather from "../sections/DailyWeather.astro";
 import HourlyWeather from "../sections/HourlyWeather.astro";
+import { Icon } from "astro-icon/components";
+import '@fontsource/bricolage-grotesque';
+import '@fontsource-variable/dm-sans';
 ---
 
-<html lang="es">
+<html lang="es" class="">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/images/favicon-32x32.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Weather App implementation with Astro JS, Tailwind, Alpine for Frontend Mentor Hackathon">
     <title>Astro</title>
   </head>
-  <body>
-    <main>
+  <body
+    class="bg-neutral-0 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-0"
+    x-data
+    x-init="$store.darkMode.init()"
+  >
+    <main class="h-svh grid gap-y-12 px-4 pt-4 pb-12 md:px-6 md:pt-6 md:pb-20 lg:px-28 lg:pt-12">
       <Header />
-      <div
-        x-data="{
-          selectedCity: null,
-          getCityData() {
-            if (!this.selectedCity) {
-              alert('Please select a city first');
-              return;
-            }
-            $store.app.fetchWeatherData(this.selectedCity);
-            this.$dispatch('clear-search-input');
-          }
-        }"
+      <h1 class="text-5xl font-Bricolage font-bold leading-tight text-center">How’s the sky looking today?</h1>
+      <section
+        class="flex flex-col gap-y-8"
+        x-data="selectedCity"
         @city-selected.window="selectedCity = $event.detail"
+        @clear-city-selection.window="selectedCity = {}"
       >
         <SearchBox />
-        <div x-show="$store.app.isLoading" class="">
-          Cargando datos de la ciudad...
+        <div x-show="$store.app.isLoading" class="grid place-items-center">
+         <Icon name="icon-loading" size={64} class="text-neutral-900 dark:text-neutral-0"/>
         </div>
-
-        <CurrentWeather />
-        <DailyWeather />
-        <HourlyWeather />
-       </div>
+        <div class="grid  grid-cols-1 lg:grid-cols-3 gap-8">
+          <CurrentWeather />
+          <DailyWeather />
+          <HourlyWeather />
+        </div>
+       </section>
     </main>
   </body>
 </html>

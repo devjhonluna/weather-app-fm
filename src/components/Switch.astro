@@ -1,0 +1,22 @@
+---
+const { id, name, value, checked, onChange,ariaLabel } = Astro.props;
+---
+
+<label class="switch" x-data>
+  
+  <div class="mx-2">
+    <input
+      type="checkbox"
+           class="sr-only peer"
+     id={id}
+      name={name}
+      value={value}
+      :checked={checked}
+      @change={onChange}
+      aria-label={ariaLabel}
+    />
+    <!-- El input tiene la clase 'peer', y este div es su hermano. -->
+    <div class="switch-track"></div>
+  </div>
+ 
+</label>

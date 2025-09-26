@@ -4,6 +4,7 @@ const {
   placeholder = "Search...",
   apiEndpoint = null,
 } = Astro.props;
+import { Icon } from "astro-icon/components";
 ---
 
 <div
@@ -13,21 +14,23 @@ const {
     })`}
   @click.outside="open = false; reset();"
   @clear-search-input.window="search = ''; results = []; open = false;"
+  class="searchbar"
 >
+  <Icon name="icon-search" size={24} class="text-neutral-900 dark:text-neutral-200 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
   <input
-    x-model="search"
+    x-model="search" id="searchcity"
     @input.debounce.300ms="searchItems()"
     @keydown.arrow-down.prevent="move(1)"
     @keydown.arrow-up.prevent="move(-1)"
     @keydown.enter.prevent="selectItem(results[selectedIndex])"
     @keydown.escape.prevent="open = false; reset()"
     placeholder={placeholder}
-    class="w-full px-4 py-2 border rounded-md"
+    autocomplete="off"
+    class="searchbar-field placeholder:font-dm placeholder:font-medium placeholder:leading-tight placeholder:text-xl placeholder:text-neutral-800 dark:placeholder:text-neutral-200 focus-visible:outline-none"
   />
-
   <ul
     x-show="open"
-    class="absolute w-full mt-1 bg-white border rounded-md shadow-lg z-10"
+    class="searchbar-options"
   >
     <template x-if="loading">
       <li class="px-4 py-2 text-gray-500">Búsqueda en progreso...</li>
@@ -39,8 +42,8 @@ const {
       <li
         x-text="`${item.name}, ${item.admin1} ,${item.country}`"
         @click="selectItem(item)"
-        :class="{ 'bg-gray-200': index === selectedIndex }"
-        class="px-4 py-2 cursor-pointer hover:bg-gray-100"
+        :class="{ 'bg-neutral-300': index === selectedIndex }"
+        class="px-4 py-2 font-dm text-base leading-tight cursor-pointer rounded-md hover:bg-neutral-200 dark:hover:bg-neutral-600"
       >
       </li>
     </template>

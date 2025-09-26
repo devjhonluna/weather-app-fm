@@ -1,43 +1,22 @@
-# Astro Starter Kit: Minimal
+# Weather App - Open Meteor 🌤️
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Desafío #15 de Frontend Mentor | Seleccionado para la Hackathon de Frontend Mentor (Sept 5 - Oct 6)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Una aplicación del clima moderna, responsive y de alto rendimiento, construida como solución al desafío número 15 de Frontend Mentor. Este proyecto también fue desarrollado dentro del marco de la hackathon de 30 días organizada por la plataforma.
 
-## 🚀 Project Structure
+🚀 Tecnologías Utilizadas
+La aplicación aprovecha la potencia y simplicidad de las siguientes herramientas:
 
-Inside of your Astro project, you'll see the following folders and files:
+Astro JS: Como metaframework base para obtener un rendimiento óptimo y una experiencia de desarrollo moderna.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Tailwind CSS: Para un diseño responsive y altamente personalizable de manera eficiente.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Alpine JS: Para añuir interactividad client-side de forma sencilla y ligera.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Open-Meteo API: Como fuente de datos meteorológicos gratuita y confiable.
 
-Any static assets, like images, can be placed in the `public/` directory.
+✨ Características Principales
 
-## 🧞 Commands
+Consulta del clima en tiempo real.
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Diseño 100% responsive (mobile-first).

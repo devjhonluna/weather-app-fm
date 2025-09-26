@@ -1,107 +1,20 @@
 ---
-import {
-  Dropdown,
-  DropdownContent,
-  DropdownTrigger,
-} from "../components/dropdown";
+import Theme from "../components/Header/Theme.astro";
+import Units from "../components/Header/Units.astro";
+import logoDark from "../assets/icons/logo-dark.svg"
+import logoLight from "../assets/icons/logo.svg"
+
 ---
 
-<header>
-  <div>logo</div>
-  <Dropdown>
-    <DropdownTrigger slot="trigger">Units</DropdownTrigger>
-    <DropdownContent slot="content">
-      <ul x-data>
-        <li>
-          <div>
-            <label
-              for="unit-switch"
-              x-text="$store.app.unitSystem === 'metric' ? 'Switch to Imperial' : 'Switch to Metric'"
-            ></label>
-            <input
-              type="checkbox"
-              id="unit-switch"
-              :checked="$store.app.unitSystem === 'imperial'"
-              @change="$store.app.toggleUnitSystem()"
-            />
-          </div>
-        </li>
-        <li>
-          <span>temperature</span>
-          <div class="">
-            <label for="Celsius">Celsius (ºC)</label>
-            <input
-              type="radio"
-              id="Celsius"
-              name="temperature"
-              value="celsius"
-              :checked="$store.app.units.temperature_unit === 'celsius'"
-              @change="$store.app.updateUnit('temperature_unit', 'celsius')"
-            />
-          </div>
-          <div class="">
-            <label for="Fahrenheit">Fahrenheit (ºF)</label>
-            <input
-              type="radio"
-              id="Fahrenheit"
-              name="temperature"
-              value="fahrenheit"
-              :checked="$store.app.units.temperature_unit === 'fahrenheit'"
-              @change="$store.app.updateUnit('temperature_unit', 'fahrenheit')"
-            />
-          </div>
-        </li>
-        <li>
-          <span>wind speed</span>
-          <div class="">
-            <label for="kmh">Km/h</label>
-            <input
-              type="radio"
-              id="kmh"
-              name="wind"
-              value="kmh"
-              :checked="$store.app.units.wind_speed_unit === 'kmh'"
-              @change="$store.app.updateUnit('wind_speed_unit', 'kmh')"
-            />
-          </div>
-          <div class="">
-            <label for="mph">Mph</label>
-            <input
-              type="radio"
-              id="mph"
-              name="wind"
-              value="mph"
-              :checked="$store.app.units.wind_speed_unit === 'mph'"
-              @change="$store.app.updateUnit('wind_speed_unit', 'mph')"
-            />
-          </div>
-        </li>
-        <li>
-          <span>precipitation</span>
-          <div class="">
-            <label for="mm">Millimeters (mm)</label>
-            <input
-              type="radio"
-              id="mm"
-              name="precipitation"
-              value="mm"
-              :checked="$store.app.units.precipitation_unit === 'mm'"
-              @change="$store.app.updateUnit('precipitation_unit', 'mm')"
-            />
-          </div>
-          <div class="">
-            <label for="inch">Inches (inch)</label>
-            <input
-              type="radio"
-              id="inch"
-              name="precipitation"
-              value="inch"
-              :checked="$store.app.units.precipitation_unit === 'inch'"
-              @change="$store.app.updateUnit('precipitation_unit', 'inch')"
-            />
-          </div>
-        </li>
-      </ul>
-    </DropdownContent>
-  </Dropdown>
+<header class="flex flex-row items-center justify-between" x-data>
+  <a href="/" aria-label="Homepage">
+    <!-- Logo para modo claro -->
+    <img x-show="!$store.darkMode.dark" src={logoLight.src} alt="Weather App Logo" class="h-8 w-auto">
+    <!-- Logo para modo oscuro, oculto por defecto para evitar parpadeo -->
+    <img x-show="$store.darkMode.dark" src={logoDark.src} alt="Weather App Logo" class="h-8 w-auto" style="display: none;">
+  </a>
+  <div class="flex gap-4">
+    <Units/>
+    <Theme />
+  </div>
 </header>

@@ -1,0 +1,21 @@
+@layer components {
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+@utility card-horizontal {
+  flex-direction: row;
+}
+
+@utility card-bg {
+  --url-sm: url("../../assets/icons/bg-today-small.svg");
+  --url-md: url("../../assets/icons/bg-today-large.svg");
+  @apply bg-no-repeat bg-cover bg-center;
+  background-image: var(--url-sm);
+  @media (width >= 48rem /* 768px */) {
+    background-image: var(--url-md);
+  }
+}

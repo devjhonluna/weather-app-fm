@@ -1,0 +1,119 @@
+---
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownTrigger,
+} from "../dropdown/index";
+import Checkbox from "../checkbox.astro";
+import { Icon } from "astro-icon/components";
+
+---
+
+   <Dropdown class="dropdown font-dm font-medium text-base leading-tight">
+      <DropdownTrigger
+        class="dropdown-trigger bg-neutral-900 text-neutral-0 dark:bg-neutral-800"
+        slot="trigger"
+      >
+        <Icon name="icon-units" size={16} />
+        Units
+        <Icon name="icon-dropdown" size={16} />
+      </DropdownTrigger>
+      <DropdownContent
+        x-show="open"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="transform opacity-0 scale-95"
+        x-transition:enter-end="transform opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-75"
+        x-transition:leave-start="transform opacity-100 scale-100"
+        x-transition:leave-end="transform opacity-0 scale-95"
+        class="dropdown-content bg-neutral-900 text-neutral-0 dark:bg-neutral-800 dark:border dark:border-neutral-600"
+        slot="content"
+      >
+        <ul x-data class="text-right">
+          <li class="px-2 py-2.5 hover:bg-neutral-700 rounded">
+            <div class="text-center">
+              <label
+                for="unit-switch"
+                x-text="$store.app.unitSystem === 'metric' ? 'Switch to Imperial' : 'Switch to Metric'"
+              ></label>
+              <input
+                class="appearance-none"
+                type="checkbox"
+                id="unit-switch"
+                :checked="$store.app.unitSystem === 'imperial'"
+                @change="$store.app.toggleUnitSystem()"
+              />
+            </div>
+          </li>
+          <li>
+            <span class="text-left text-neutral-300 font-medium leading-tight text-sm">temperature</span>
+            <Checkbox
+              id="Celsius"
+              name="temperature"
+              value="celsius"
+              checked="$store.app.units.temperature_unit === 'celsius'"
+              onChange="$store.app.updateUnit('temperature_unit', 'celsius')"
+            >
+              <span slot="label">Celsius (ºC)</span>
+              <Icon name="icon-checkmark" size={12} slot="icon" />
+            </Checkbox>
+            <Checkbox
+              id="Fahrenheit"
+              name="temperature"
+              value="fahrenheit"
+              checked="$store.app.units.temperature_unit === 'fahrenheit'"
+              onChange="$store.app.updateUnit('temperature_unit', 'fahrenheit')"
+            >
+              <span slot="label">Fahrenheit (ºF)</span>
+              <Icon name="icon-checkmark" size={12} slot="icon" />
+            </Checkbox>
+          </li>
+          <li>
+            <span class="text-left text-neutral-300 font-medium leading-tight text-sm">wind speed</span>
+            <Checkbox
+              id="kmh"
+              name="wind"
+              value="kmh"
+              checked="$store.app.units.wind_speed_unit === 'kmh'"
+              onChange="$store.app.updateUnit('wind_speed_unit', 'kmh')"
+            >
+              <span slot="label">Km/h</span>
+              <Icon name="icon-checkmark" size={12} slot="icon" />
+            </Checkbox>
+            <Checkbox
+              id="mph"
+              name="wind"
+              value="mph"
+              checked="$store.app.units.wind_speed_unit === 'mph'"
+              onChange="$store.app.updateUnit('wind_speed_unit', 'mph')"
+            >
+              <span slot="label">Mph</span>
+              <Icon name="icon-checkmark" size={12} slot="icon" />
+            </Checkbox>
+          </li>
+          <li>
+            <span class="text-left text-neutral-300 font-medium leading-tight text-sm">precipitation</span>
+            <Checkbox
+              id="mm"
+              name="precipitation"
+              value="mm"
+              checked="$store.app.units.precipitation_unit === 'mm'"
+              onChange="$store.app.updateUnit('precipitation_unit', 'mm')"
+            >
+              <span slot="label">Millimeters (mm)</span>
+              <Icon name="icon-checkmark" size={12} slot="icon" />
+            </Checkbox>
+            <Checkbox
+              id="inch"
+              name="precipitation"
+              value="inch"
+              checked="$store.app.units.precipitation_unit === 'inch'"
+              onChange="$store.app.updateUnit('precipitation_unit', 'inch')"
+            >
+              <span slot="label">Inches (inch)</span>
+              <Icon name="icon-checkmark" size={12} slot="icon" />
+            </Checkbox>
+          </li>
+        </ul>
+      </DropdownContent>
+    </Dropdown>

@@ -1,12 +1,20 @@
+---
+import { WEATHER_CODE_TO_IMAGE_MAP } from "../utils/getWeatherImg.js";
+const imageMap = WEATHER_CODE_TO_IMAGE_MAP;
+---
+
 <div
   x-show="$store.app.location.city && !$store.app.isLoading && Object.keys($store.app.hourlyData.hourly).length > 0"
-  class="mt-4 p-4 bg-gray-100 rounded"
+  class="lg:row-span-2 lg:col-start-3 lg:row-start-1 px-4 py-5 bg-neutral-900 text-neutral-0 rounded-xl card gap-4 items-stretch dark:border dark:bg-neutral-800 dark:border-neutral-600"
+  x-data=`displaycodeimg({
+    imageMap: ${JSON.stringify(imageMap)},
+   })`
 >
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-xl font-bold">Hourly Forecast</h2>
+  <div class="flex justify-between items-center font-dm">
+    <h2 class="text-xl leading-tight font-semibold">Hourly Forecast</h2>
     <select
       x-model="$store.app.selectedHourlyDay"
-      class="p-2 border rounded bg-white"
+      class="p-2 rounded-xl border bg-neutral-900 text-neutral-0 border-neutral-800 dark:bg-neutral-600 dark:border-neutral-600"
     >
       <template
         x-for="day in Object.keys($store.app.hourlyData.hourly)"
@@ -14,31 +22,38 @@
       >
         <option
           :value="day"
-          x-text="new Date(day + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })"
+          x-text="new Date(day + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long'})"
         ></option>
       </template>
     </select>
   </div>
 
-  <ul class="flex overflow-x-auto space-x-4 pb-4">
+  <ul class="flex flex-col gap-y-2 overflow-y-auto max-h-240 noscroll *border *:bg-neutral-800 *:border-neutral-700 *:dark:bg-neutral-700 *:dark:border-neutral-600 *:py-2.5 *:pl-3 *:pr-4 *:rounded-lg *:font-dm *:leading-tight ">
     <template x-if="$store.app.selectedHourlyDay">
       <template
         x-for="(hour, index) in $store.app.hourlyData.hourly[$store.app.selectedHourlyDay]"
         :key="index"
       >
-        <li class="flex-shrink-0 p-2 border rounded bg-white text-center w-28">
-          <p
-            class="font-semibold"
-            x-text="new Date(hour.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})"
-          >
-          </p>
-          <p class="text-lg">
-            <span x-text="Math.round(hour.temperature_2m)"></span>
-            <span x-text="$store.app.hourlyData.units.temperature_2m"></span>
-          </p>
-          <p class="text-xs">
-            Code: <span x-text="hour.weather_code"></span>
-          </p>
+        <li class="flex items-center justify-between w-full gap-x-4">
+          <picture class="size-12">
+            <img
+              :src="getImageCode(hour.weather_code)"
+              class="size-full"
+              alt="Hourly Weather icon"
+            />
+          </picture>
+          <div class="*:font-medium w-full flex justify-between items-center">
+            <p
+              class="text-xl "
+              x-text="new Date(hour.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})"
+            >
+            </p>
+            <p
+              class="text-base"
+              x-text="`${Math.round(hour.temperature_2m)} ${$store.app.hourlyData.units.temperature_2m}`"
+            >
+            </p>
+          </div>
         </li>
       </template>
     </template>

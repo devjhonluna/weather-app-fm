@@ -1,0 +1,35 @@
+---
+interface Props {
+  id: string;
+  name: string;
+  value: string;
+  checked: string; // Pasamos la condición de Alpine como un string
+  onChange: string; // Pasamos la acción de Alpine como un string
+}
+
+const { id, name, value, checked, onChange } = Astro.props;
+
+
+---
+
+<label for={id} class="checkbox">
+  <span><slot name="label"/></span>
+  <div class="checkbox-content">
+    <input
+      class="sr-only peer"
+      type="radio"
+      id={id}
+      name={name}
+      value={value}
+      :checked={checked}
+      @change={onChange}
+    />
+    <!--
+      La clase 'peer-checked:flex' funciona porque el input tiene la clase 'peer'.
+      Tailwind detectará esta relación y aplicará el estilo correctamente.
+    -->
+    <div class="checkbox-icon peer-checked:flex">
+      <slot name="icon" />
+    </div>
+  </div>
+</label>

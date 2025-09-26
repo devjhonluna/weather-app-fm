@@ -1,17 +1,33 @@
-<div x-show="$store.app.location.city && !$store.app.isLoading && $store.app.dailyData.daily.length > 0" class="mt-4 p-4 bg-gray-100 rounded">
-  <h2 class="text-xl font-bold mb-2">7-Day Forecast</h2>
-  <ul class="space-y-2">
+---
+import { WEATHER_CODE_TO_IMAGE_MAP } from "../utils/getWeatherImg.js";
+const imageMap = WEATHER_CODE_TO_IMAGE_MAP;
+---
+
+<div
+  x-show="$store.app.location.city && !$store.app.isLoading && $store.app.dailyData.daily.length > 0"
+  class="lg:col-span-2 lg:col-start-1 lg:row-start-2"
+  x-data=`displaycodeimg({
+    imageMap: ${JSON.stringify(imageMap)},
+   })`
+>
+  <h2 class="text-xl font-bold mb-5">Daily Forecast</h2>
+  <ul class="flex flex-wrap gap-4 *:bg-neutral-900 *:text-neutral-0 *:dark:border *:dark:bg-neutral-800 *:dark:border-neutral-600 ">
     <template x-for="(day, index) in $store.app.dailyData.daily" :key="index">
-      <li class="p-2 border rounded bg-white">
-        <p>
-          <strong>Date:</strong> <span x-text="day.time"></span>
+      <li
+        class="p-5 rounded-xl card flex-[1_1_12rem] *:font-dm *:leading-tight"
+      >
+        <p class="text-lg">
+          <span
+            x-text="new Date(day.time).toLocaleDateString('en-US',{weekday:'long'})"
+          ></span>
         </p>
-        <p>
-          <strong>Max Temp:</strong>
-          <span x-text="day.temperature_2m_max"></span>
-          <span x-text="$store.app.dailyData.units.temperature_2m_max"></span>
-        </p>
-        <p><strong>Weather Code:</strong> <span x-text="day.weather_code"></span></p>
+        <picture class="size-16">
+          <img :src="getImageCode(day.weather_code)" class="size-full" alt="Daily Weather icon" />
+        </picture>
+        <div class="flex flex-row justify-between gap-4 text-base">
+           <span x-text="`${Math.round(day.temperature_2m_max)} ${$store.app.dailyData.units.temperature_2m_max}`"></span>
+           <span x-text="`${Math.round(day.temperature_2m_min)} ${$store.app.dailyData.units.temperature_2m_min}`"></span>           
+        </div>      
       </li>
     </template>
   </ul>

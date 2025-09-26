@@ -1,0 +1,18 @@
+@layer components {
+  .checkbox {
+    @apply flex cursor-pointer items-center justify-between rounded px-2 py-2.5 hover:bg-neutral-700;
+  }
+
+  .checkbox-content {
+    @apply relative size-5;
+  }
+
+  /*
+    La clase 'peer' debe permanecer en el input para que 'peer-checked' funcione,
+    pero 'sr-only' se puede aplicar aquí si lo deseas, aunque es común dejarlo en línea.
+  */
+
+  .checkbox-icon {
+    @apply absolute inset-0 hidden items-center justify-center;
+  }
+}

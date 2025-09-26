@@ -1,0 +1,25 @@
+@layer components {
+  .switch {
+    @apply inline-flex items-center cursor-pointer;
+  }
+
+  .switch-track {
+    @apply relative h-5 w-10 rounded-full bg-neutral-700 transition-colors;
+    /* Estilos para el círculo (thumb) que se mueve */
+    &::after {
+      content: "";
+      @apply absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white transition-all;
+    }
+  }
+
+  /*
+      Cuando el input 'peer' está ':checked', aplicamos estos estilos
+      a los elementos hermanos que tengan la clase .switch-track
+    */
+  .peer:checked ~ .switch-track {
+    @apply bg-blue-700; /* Cambia el color de fondo del track */
+    &::after {
+      @apply translate-x-full; /* Mueve el thumb */
+    }
+  }
+}
