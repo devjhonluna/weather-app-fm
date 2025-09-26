@@ -1,11 +1,11 @@
 ---
-import "../styles/global.css";
+import "@styles/global.css";
 
-import SearchBox from "../sections/SearchBox.astro";
-import Header from "../sections/header.astro";
-import CurrentWeather from "../sections/CurrentWeather.astro";
-import DailyWeather from "../sections/DailyWeather.astro";
-import HourlyWeather from "../sections/HourlyWeather.astro";
+import SearchBox from "@sections/SearchBox.astro";
+import Header from "@sections/header.astro";
+import CurrentWeather from "@sections/CurrentWeather.astro";
+import DailyWeather from "@sections/DailyWeather.astro";
+import HourlyWeather from "@sections/HourlyWeather.astro";
 import { Icon } from "astro-icon/components";
 import '@fontsource/bricolage-grotesque';
 import '@fontsource-variable/dm-sans';
@@ -44,8 +44,10 @@ import '@fontsource-variable/dm-sans';
           <HourlyWeather />
         </div>
        </section>
+       <footer>
+        <p class="text-center" >© 2025 devjhonluna™-Todos los Derechos reservados.</p>
+       </footer>
     </main>
+    <script src="../services/app.js"></script>
   </body>
 </html>
-
-<script type="module" is:inline src="../../src/services/app.js"></script>

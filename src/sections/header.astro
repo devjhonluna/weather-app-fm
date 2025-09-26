@@ -1,8 +1,8 @@
 ---
-import Theme from "../components/Header/Theme.astro";
-import Units from "../components/Header/Units.astro";
-import logoDark from "../assets/icons/logo-dark.svg"
-import logoLight from "../assets/icons/logo.svg"
+import Theme from "@components/Header/Theme.astro";
+import Units from "@components/Header/Units.astro";
+import logoDark from "@assets/icons/logo-dark.svg"
+import logoLight from "@assets/icons/logo.svg"
 
 ---
 
@@ -14,7 +14,7 @@ import logoLight from "../assets/icons/logo.svg"
     <img x-show="$store.darkMode.dark" src={logoDark.src} alt="Weather App Logo" class="h-8 w-auto" style="display: none;">
   </a>
   <div class="flex gap-4">
-    <Units/>
     <Theme />
+    <Units/>
   </div>
 </header>

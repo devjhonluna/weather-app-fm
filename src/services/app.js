@@ -1,7 +1,7 @@
 import Alpine from "alpinejs";
-import getUnitSystem from "../utils/units";
+import getUnitSystem from "@utils/units";
 import { fetchWeatherFromApi } from "./api";
-import { setupDarkMode } from "../utils/darkmodeSwitcher";
+import { setupDarkMode } from "@utils/darkmodeSwitcher";
 import getSelectedCity from "./getSelectedCity";
 
 Alpine.data("selectedCity", getSelectedCity);
@@ -163,6 +163,3 @@ Alpine.store("app", {
     }
   },
 });
-
-// Inicia Alpine DESPUÉS de registrar todos los stores y componentes
-Alpine.start();
