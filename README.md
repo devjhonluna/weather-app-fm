@@ -2,7 +2,7 @@
 
 Desafío #15 de Frontend Mentor | Seleccionado para la Hackathon de Frontend Mentor (Sept 5 - Oct 6)
 
-Una aplicación del clima moderna, responsive y de alto rendimiento, construida como solución al desafío número 15 de Frontend Mentor. Este proyecto también fue desarrollado dentro del marco de la hackathon de 30 días organizada por la plataforma.
+Una aplicación del clima moderna, responsive y de alto rendimiento, construida como solución al desafío número 15 de Frontend Mentor. Este proyecto también fue desarrollado dentro del marco de la hackathon de 30 días organizada por la plataforma. Tiene una puntuación perfecta de 100 puntos en todas las áreas de rendimiento, accesibilidad, buenas prácticas y SEO según Lighthouse.
 
 ## 🚀 Tecnologías Utilizadas
 
